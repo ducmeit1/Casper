@@ -13,7 +13,21 @@
 
     {{!-- Styles'n'Scripts --}}
     <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}" />
-
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css">
+    <style>
+    pre {
+        word-wrap: normal;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        -webkit-hyphens: none;
+        hyphens: none;
+        font-size: 0.7em;
+        line-height: 1.3em;
+    }
+        pre code, pre tt {
+        white-space: pre;
+    }
+</style>
     {{!-- This tag outputs SEO meta+structured data and other important settings --}}
     {{ghost_head}}
 
@@ -30,11 +44,14 @@
             <div class="site-footer-content inner">
                 <section class="copyright"><a href="{{@site.url}}">{{@site.title}}</a> &copy; {{date format="YYYY"}}</section>
                 <nav class="site-footer-nav">
-                    <a href="{{@site.url}}">Latest Posts</a>
                     {{#if @site.facebook}}<a href="{{facebook_url @site.facebook}}" target="_blank" rel="noopener">Facebook</a>{{/if}}
                     {{#if @site.twitter}}<a href="{{twitter_url @site.twitter}}" target="_blank" rel="noopener">Twitter</a>{{/if}}
-                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
-                </nav>
+                    <a href="https://github.com/ducmeit1" target="_blank" rel="noopener">Github</a>
+                    <a href="https://www.linkedin.com/in/ducmeit1" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://www.buymeacoffee.com/ducmeit1" target="_blank" rel="noopener">Buy Coffee</a>
+                    <a href="mailto:ducmeit2016@gmail.com" target="_blank" rel="noopener">Contact Me</a>
+                    <a href="{{@site.url}}/rss" target="_blank" rel="noopener">RSS</a>
+               </nav>
             </div>
         </footer>
 
@@ -73,6 +90,7 @@
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
     <script type="text/javascript" src="{{asset "built/jquery.fitvids.js"}}"></script>
 
     {{#if pagination.pages}}

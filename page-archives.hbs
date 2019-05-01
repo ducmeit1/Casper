@@ -1,0 +1,89 @@
+{{!< default}}
+{{!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template --}}
+
+{{!-- The big featured header, it uses blog cover image as a BG if available --}}
+<header class="site-header outer">
+    <div class="inner">
+        {{> "site-nav"}}
+    </div>
+</header>
+
+{{!-- Everything inside the #post tags pulls data from the post --}}
+{{#post}}
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full {{post_class}} {{#unless feature_image}}no-image{{/unless}}">
+
+            <header class="post-full-header">
+                <h1 class="post-full-title">{{title}}</h1>
+            </header>
+
+            {{#if feature_image}}
+            <figure class="post-full-image">
+                {{!-- This is a responsive image, it loads different sizes depending on device
+                https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
+                <img
+                    srcset="{{img_url feature_image size="s"}} 300w,
+                            {{img_url feature_image size="m"}} 600w,
+                            {{img_url feature_image size="l"}} 1000w,
+                            {{img_url feature_image size="xl"}} 2000w"
+                    sizes="(max-width: 800px) 400px,
+                            (max-width: 1170px) 700px,
+                            1400px"
+                    src="{{img_url feature_image size="xl"}}"
+                    alt="{{title}}"
+                />
+            </figure>
+            {{/if}}
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <article class="archives">
+            <section class="archives-content">
+                <span class="archives-top"></span>
+                <span class="archives-total">
+                    {{! count posts }}
+                    {{#get "posts" as |posts postPages|}}
+                        {{! Use our pages (pagination) object }}
+                        <strong>
+                            {{plural postPages.total empty=(t "No posts") singular=(t "A collection of 1 post") plural=(t "A collection of % posts")}}
+                        </strong>
+                    {{/get}}
+                </span>
+                {{#get "posts" limit="all" order="published_at desc"}}
+                    {{#foreach posts}}
+                    <div class="archives-item" date="{{date format="YYYY"}}">
+                        <div class="archives-info">
+                            <div class="archives-info-meta">
+                                <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+                                <time class="archives-date" datetime="{{date published_at format="DD-MM"}}">{{date published_at format="DD-MM"}}</time>
+                                <a href="{{url}}">{{title}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/foreach}}
+                {{/get}}
+            </section>
+        </article>
+                </div>
+            </section>
+
+        </article>
+
+    </div>
+</main>
+
+{{/post}}
+
+{{!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs --}}
+{{#contentFor "scripts"}}
+<script>
+$(function() {
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+});
+</script>
+{{/contentFor}}

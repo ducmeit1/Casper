@@ -49,16 +49,27 @@ into the {body} of the default.hbs template --}}
                 <div class="post-content">
                     {{content}}
                 </div>
+                {{#if tags}}
+                <div class="post-full-tags">
+                    Tags: 
+                    {{#get "tags"}}
+                    {{#foreach tags}}
+                    <a href="{{url}}">#{{name}}</a>
+                    {{/foreach}}
+                    {{/get}}
+                </div>
+                {{/if}}
             </section>
+            
 
-            {{!-- Email subscribe form at the bottom of the page --}}
+            {{!-- Email subscribe form at the bottom of the page
             {{#if @labs.subscribers}}
             <section class="subscribe-form">
                 <h3 class="subscribe-form-title">Subscribe to {{@site.title}}</h3>
                 <p>Get the latest posts delivered right to your inbox</p>
                 {{subscribe_form placeholder="youremail@example.com"}}
             </section>
-            {{/if}}
+            {{/if}} --}}
 
             <footer class="post-full-footer">
 
@@ -75,14 +86,19 @@ into the {body} of the default.hbs template --}}
 
             </footer>
 
-            {{!--
+            
             <section class="post-full-comments">
-                If you want to embed comments, this is a good place to do it!
+            <div id="disqus_thread"></div>
+                <script>
+                (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://ducmeit.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+                </script>
             </section>
-            --}}
-
         </article>
-
     </div>
 </main>
 
@@ -145,7 +161,7 @@ into the {body} of the default.hbs template --}}
 {{!-- The #contentFor helper here will send everything inside it up to the matching #block helper found in default.hbs --}}
 {{#contentFor "scripts"}}
 <script>
-
+hljs.initHighlightingOnLoad();
 // NOTE: Scroll performance is poor in Safari
 // - this appears to be due to the events firing much more slowly in Safari.
 //   Dropping the scroll event and using only a raf loop results in smoother
